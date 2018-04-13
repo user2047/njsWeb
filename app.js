@@ -59,6 +59,15 @@ app.get("/about",(req,res)=>{
   res.render("about.hbs",about);
 });
 
+var projects = {
+  title:"Projects",
+  welcomeMessage: "Welcome to the project page"
+}
+
+app.get("/projects",(req,res)=>{
+  res.render("projects.hbs",projects)
+})
+
 app.get("/bad",(req,res)=>{
   res.send({
     errorMessage:"bad gateway"
