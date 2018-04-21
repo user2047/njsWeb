@@ -1,6 +1,14 @@
 const express = require("express");
 const hbs = require("hbs");
 const fs = require("fs");
+
+const bodyParser = require("body-parser");
+const multer = require("multer");
+
+var upload = multer();
+
+
+
 const port = process.env.PORT || 3000;
 
 var year = new Date().getFullYear();
@@ -32,6 +40,8 @@ app.use((req,res,next)=>{
 
 app.use(express.static(__dirname + "/public"));
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 hbs.registerHelper("getCurrentYear",()=>{
   return new Date().getFullYear();
@@ -72,6 +82,20 @@ app.get("/bad",(req,res)=>{
   res.send({
     errorMessage:"bad gateway"
   });
+});
+
+app.get("/form",(req,res)=>{
+  res.render("form.hbs",{title:"form"});
+});
+
+app.post("/form",upload.array(),(req,res)=>{
+
+
+  // console.log(req.body.variable_name);
+  // console.log(JSON.stringify(req.body,undefined,2));
+  console.log(req.body);
+  // res.JSON(req.body);
+  // console.log(JSON.stringify(req,undefined,2));
 });
 
 
